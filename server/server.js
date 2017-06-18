@@ -20,7 +20,26 @@ io.on('connection', (socket)=> {
      socket.on('disconnect', () => {
        console.log('disconnected from the client');
      });
-})
+
+    //  socket.emit('newEmail', {
+    //     from: 'abc@exmple.com',
+    //     text: ' Hey! Whats up!',
+    //     createdAt: 123123
+    //  });
+     //
+    //  socket.on('createEmail', (newEmail) => {
+    //    console.log('createEmail', newEmail);
+    //  });
+
+    socket.emit('newMessage', {
+        from: 'Ananda',
+        text: 'Message from Server'
+    });
+
+    socket.on('createMessage', (newMessage) => {
+       console.log('Message Arrived from Client', newMessage);
+    });
+});
 
 server.listen(port, () => {
   console.log(`server started at port ${port}`);
