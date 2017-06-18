@@ -38,6 +38,10 @@ io.on('connection', (socket)=> {
 
     socket.on('createMessage', (newMessage) => {
        console.log('Message Arrived from Client', newMessage);
+       io.emit('newMessage', {
+         to: newMessage.to,
+         text: newMessage.text,
+         createdAt: new Date().getTime()})
     });
 });
 
