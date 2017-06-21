@@ -36,11 +36,12 @@ io.on('connection', (socket)=> {
     //    console.log('createEmail', newEmail);
     //  });
 
-    socket.emit('newMessage', generateMessage('Ananda','Message from Server'));
+  //  socket.emit('newMessage', generateMessage('Ananda','Message from Server'));
 
-    socket.on('createMessage', (newMessage) => {
-       console.log('Message Arrived from Client', newMessage);
-       io.emit('newMessage', generateMessage(newMessage.to,newMessage.text));
+    socket.on('createMessage', (newMessage, callback) => {
+       console.log('Message', newMessage);
+       io.emit('newMessage', generateMessage(newMessage.from,newMessage.text));
+       callback('This is from server');
     });
 
       //  socket.broadcast.emit('newMessage', {
