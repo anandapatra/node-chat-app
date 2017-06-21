@@ -1,52 +1,33 @@
 var socket = io();
 socket.on('connect', function () {
   console.log('connected to the server');
-
-  // socket.emit('createEmail', {
-  //     to: 'jen@example.com',
-  //     text: 'How are you'
-  // });
-
-  // socket.emit('createMessage', {
-  //    to: 'Ayaan',
-  //    text: 'create message'
-  // });
-
 });
+
 socket.on('disconnect', function() {
   console.log('disconnected from the server');
 });
 
-// socket.on('newEmail', function(email) {
-//   console.log('new email', email);
-// });
-
 socket.on('newMessage', function (newMessage) {
    console.log('NewMessage', newMessage);
+   var formattedTime = moment(newMessage.createdAt).format('h:mm:ss a');
    var li = jQuery('<li></li>');
-   li.text(`${newMessage.from}: ${newMessage.text}`);
+   li.text(`${newMessage.from} ${formattedTime}: ${newMessage.text}`);
 
    jQuery('#messages').append(li);
 });
 
 socket.on('newLocationMessage', function(message) {
+     var formattedTime = moment(message.createdAt).format('h:mm:ss a');
       var li = jQuery('<li></li>');
       var a = jQuery('<a target="_blank">My Current Location</a>');
 
-      li.text = `Message from: ${message.from}`
+      li.text (`${message.from} ${formattedTime}: `);
       a.attr('href', message.url);
       li.append(a);
 
       jQuery('#messages').append(li);
 
 });
-
-// socket.emit('createMessage', {
-//   from: 'Ananda',
-//   text: 'Hi'
-// }, function(data) {
-//   console.log('got it', data);
-// });
 
 jQuery('#message-form').on('submit', function(e) {
   e.preventDefault();

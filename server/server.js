@@ -18,37 +18,19 @@ app.use(express.static(publicPath));
 io.on('connection', (socket)=> {
      console.log('new user connected');
 
-     socket.emit('newMessage', generateMessage('Admin','Welcome to the chat App'));
+     socket.emit('newMessage', generateMessage('Admin','Welcome to the chat app'));
 
-     socket.broadcast.emit('newMessage', generateMessage('Admin','New User Joined'));
+     socket.broadcast.emit('newMessage', generateMessage('Admin','New user joined'));
 
      socket.on('disconnect', () => {
        console.log('disconnected from the client');
      });
 
-    //  socket.emit('newEmail', {
-    //     from: 'abc@exmple.com',
-    //     text: ' Hey! Whats up!',
-    //     createdAt: 123123
-    //  });
-     //
-    //  socket.on('createEmail', (newEmail) => {
-    //    console.log('createEmail', newEmail);
-    //  });
-
-  //  socket.emit('newMessage', generateMessage('Ananda','Message from Server'));
-
-    socket.on('createMessage', (newMessage, callback) => {
-       console.log('Message', newMessage);
-       io.emit('newMessage', generateMessage(newMessage.from,newMessage.text));
-       callback();
-    });
-
-      //  socket.broadcast.emit('newMessage', {
-      //    to: newMessage.to,
-      //    text: newMessage.text,
-      //    createdAt: new Date().getTime()})
-      //  });
+     socket.on('createMessage', (newMessage, callback) => {
+         console.log('Message', newMessage);
+         io.emit('newMessage', generateMessage(newMessage.from,newMessage.text));
+         callback();
+      });
 
       socket.on('createLocationMessage', (coord) => {
           io.emit('newLocationMessage', generateLocationMessage('Admin', coord));
